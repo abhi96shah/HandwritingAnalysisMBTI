@@ -24,15 +24,6 @@ img_dilation = cv2.dilate(thresh, kernel, iterations=1)
 cv2.imshow('dilated', img_dilation)
 cv2.waitKey(0)
 
-# kernel = np.ones((1, 3), np.uint8)
-# img_dilation = cv2.erode(thresh, kernel, iterations=1)
-# cv2.imshow('dilated', img_dilation)
-# cv2.waitKey(0)
-# thresh = 200
-# blur = cv2.GaussianBlur(gray, (5, 5), 0)
-# img_dilation = cv2.Canny(blur, thresh, thresh * 2)
-# image = np.zeros(image.shape, np.uint8)  # Image to draw the contours
-
 # find contours
 im2, ctrs, hier = cv2.findContours(
     img_dilation.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
@@ -60,16 +51,16 @@ for i, ctr in enumerate(sorted_ctrs):
 
     x, y, w, h = cv2.boundingRect(ctr)
 
-    # if x < 10 or y < 10:
-    #     continue
-    # if w < 15 or h < 15:
-    #     continue
+    if x < 10 or y < 10:
+        continue
+    if w < 15 or h < 15:
+        continue
 
     rect = cv2.minAreaRect(ctr)
     area = rect[1][0] * rect[1][1]
 
-    # if rect[1][1] >= avg_h:  # area <= avg_area or
-    #     continue
+    if rect[1][1] >= avg_h:  # area <= avg_area or
+        continue
 
     count += 1
     box = cv2.boxPoints(rect)
