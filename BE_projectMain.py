@@ -57,7 +57,7 @@ clf2 = joblib.load("TF_svm.pkl")
 clf3 = joblib.load("JP_svm.pkl")
 
 # IMAGE load
-image = cv2.imread("DATA/Akshay.jpg")
+image = cv2.imread("DATA/089_Shreyank.jpg")
 
 
 # IMAGE Resize and cut boundaries
@@ -94,7 +94,7 @@ sorted_ctrs = findContours(img_open)
 #<------EXTRACTING FEATURES------>
 
 sum_height = 0
-sum_width = 0
+# sum_width = 0
 count = 0
 c_x = []
 c_y = []
@@ -110,7 +110,7 @@ for i, ctr in enumerate(sorted_ctrs):
 
         # Update features
         sum_height += h
-        sum_width += w
+        # sum_width += w
 
         c_x.append(int(x + (w / 2)))
         c_y.append(int(y + (h / 2)))
@@ -167,7 +167,7 @@ for i, ctr in enumerate(sorted_ctrs):
 
 itemList.append(baselineExtract(c_x, c_y))
 itemList.append(sum_height / count)
-itemList.append(sum_width / count)
+# itemList.append(sum_width / count)
 itemList.append(sum_int / count)
 itemList.append(sum_dist / count)
 predictList(itemList)

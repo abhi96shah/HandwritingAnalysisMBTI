@@ -7,10 +7,11 @@ from sklearn import datasets
 from sklearn.model_selection import train_test_split
 from sklearn.svm import SVC
 from sklearn.externals import joblib
+import matplotlib.pyplot as plt
 
-# baselineList = list()
-# intensityList = list()
-# distWordsList = list()
+baselineList = list()
+#intensityList = list()
+distWordsList = list()
 # avgHeightList = list()
 # avgWidthList = list()
 featureList = list()
@@ -77,7 +78,7 @@ with open('Dataset.csv', newline='') as csvfile:
             classList_TF.append(MBTI_TF)
             classList_JP.append(MBTI_JP)
 
-            # print(row['Name'])
+            print(row['Name'])
             # print(classList)
             if(count_image < 10):
                 name = "./DATA/00" + str(count_image) + "_" + str(row['Name']) + ".jpg"
@@ -117,7 +118,7 @@ with open('Dataset.csv', newline='') as csvfile:
 
             #<------EXTRACTING FEATURES------>
             sum_height = 0
-            sum_width = 0
+            # sum_width = 0
             count = 0
             c_x = []
             c_y = []
@@ -133,7 +134,7 @@ with open('Dataset.csv', newline='') as csvfile:
 
                     # Update features
                     sum_height += h
-                    sum_width += w
+                    # sum_width += w
 
                     c_x.append(int(x + (w / 2)))
                     c_y.append(int(y + (h / 2)))
@@ -194,14 +195,14 @@ with open('Dataset.csv', newline='') as csvfile:
             # print("Average Width: ", sum_width / count)
             # print("Average Intensity: ", sum_int / count)
             # print("Average Distance between words: ", sum_dist / count - 1)
-            # baselineList.append(baselineExtract(c_x, c_y))
+            baselineList.append(baselineExtract(c_x, c_y))
             # avgHeightList.append(sum_height / count)
             # avgWidthList.append(sum_width / count)
             # intensityList.append(sum_int / count)
-            # distWordsList.append(sum_dist / count)
+            distWordsList.append(sum_dist / count)
             itemList.append(baselineExtract(c_x, c_y))
             itemList.append(sum_height / count)
-            itemList.append(sum_width / count)
+            # itemList.append(sum_width / count)
             itemList.append(sum_int / count)
             itemList.append(sum_dist / count)
             # print(itemList)
@@ -219,7 +220,6 @@ svm_predictions = svm_model_rbf.predict(X_test)
 
 accuracy = svm_model_rbf.score(X_test, y_test)
 print(accuracy)
-
 
 X1_train, X1_test, y1_train, y1_test = train_test_split(featureList, classList_SN, random_state=0)
 
